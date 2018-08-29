@@ -1,0 +1,17 @@
+version: '3'
+services:
+  website:
+    image: dockerexample
+    build: .
+    expose:
+      - "80"
+    ports:
+      - "80:80"
+    depends_on:
+      - database
+    environment:
+      ASPNETCORE_URLS: http://*.80
+      ConnectionStrings__DefaultConnection: User ID=postgre;Host=database;Dataabase=postgres
+  database:
+    image: postgres:11
+    restart: always
