@@ -10,6 +10,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{93C276
 		.dockerignore = .dockerignore
 		build-project.ps1 = build-project.ps1
 		docker-compose.yml = docker-compose.yml
+		push-dockerfile.ps1 = push-dockerfile.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrations", "Migrations", "{34B5A165-D43A-4834-982D-36BDFE53F371}"
+	ProjectSection(SolutionItems) = preProject
+		Migrations.txt = Migrations.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{897DFC8C-0D12-4FD5-8B40-5B3FC20B2A85}"
+	ProjectSection(SolutionItems) = preProject
+		nginx\Dockerfile = nginx\Dockerfile
+		nginx\nginx.conf = nginx\nginx.conf
 	EndProjectSection
 EndProject
 Global

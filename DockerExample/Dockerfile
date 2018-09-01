@@ -1,20 +1,12 @@
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
+FROM microsoft/dotnet:2.1-sdk
 WORKDIR /app
-EXPOSE 50092
-EXPOSE 44385
 
-FROM microsoft/dotnet:2.1-sdk AS build
-WORKDIR /src
-COPY ["DockerExample/DockerExample.csproj", "DockerExample/"]
-RUN dotnet restore "DockerExample/DockerExample.csproj"
 COPY . .
-WORKDIR "/src/DockerExample"
-RUN dotnet build "DockerExample.csproj" -c Release -o /app
 
-FROM build AS publish
-RUN dotnet publish "DockerExample.csproj" -c Release -o /app
+ENV ASPNETCORE_URLS http://+:5000
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app .
+RUN dotnet restore
+RUN dotnet publish ./DockerExample.csproj -c Release -o /publish/
+
+WORKDIR /publish/
 ENTRYPOINT ["dotnet", "DockerExample.dll"]

@@ -1,17 +1,44 @@
 version: '3'
+
 services:
-  website:
-    image: dockerexample
-    build: .
-    expose:
-      - "80"
-    ports:
-      - "80:80"
-    depends_on:
-      - database
-    environment:
-      ASPNETCORE_URLS: http://*.80
-      ConnectionStrings__DefaultConnection: User ID=postgre;Host=database;Dataabase=postgres
   database:
     image: postgres:11
     restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRE_PASSWORD: password123
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - dockernetwork
+
+  proxy:
+    image: reecerose/dockerexample_proxy:1-build
+    restart: always
+    ports:
+      - "80:80"
+    links:
+      - website
+    networks:
+      - dockernetwork
+
+  website:
+    image: reecerose/dockerexample:1-build
+    restart: always
+    expose:
+      - "5000"
+    ports:
+      - "5000:5000"
+    links:
+      - database
+    depends_on:
+      - "database"
+    networks:
+      - dockernetwork
+
+volumes:
+  pgdata:
+networks:
+  dockernetwork:
+     driver: bridge

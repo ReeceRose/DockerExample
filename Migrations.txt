@@ -1,0 +1,2 @@
+Add-Migration "Added user"
+Update-Database
